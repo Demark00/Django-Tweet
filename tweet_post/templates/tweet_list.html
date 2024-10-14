@@ -1,0 +1,30 @@
+{% extends "layout.html"%}
+
+{% block title%}
+Tweet
+{% endblock %}
+
+{%block content%}
+<h1 class=" text-center mt-5">Welcome to Chai's Django Project</h1>
+ <a class="btn btn-primary" href="{% url 'tweet_create' %}">Create Tweet</a> 
+<div class="container gap-3 row">
+  <form class="d-flex" role="search" id="recipe-search">
+    <input class="form-control me-2 mt-2" type="search" placeholder="Search" aria-label="Search" name="search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+    {%for tweet in tweets%}
+    <div class="card" style="width: 18rem;">
+        <img src="{{tweet.photo.url}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{tweet.user.username}}</h5>
+          <p class="card-text">{{tweet.text}}</p>
+          <p>{{tweet.created_at}}</p>
+          {% if tweet.user == user%}
+          <a href="{% url 'tweet_edit' tweet.id%}" class="btn btn-primary">Edit</a>
+          <a href="{% url 'tweet_delete' tweet.id%}" class="btn btn-danger">Delete</a>
+          {% endif %} 
+        </div>
+      </div>
+    {% endfor %}
+</div>
+{% endblock %}
